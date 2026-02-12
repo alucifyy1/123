@@ -5,8 +5,7 @@
 
     🔥 RIVALS INFERNO 🔥
     Made by aspan666
-    Версия: ULTIMATE | Rayfield UI
-    GitHub: https://github.com/alucifyy1/123
+    Версия: RAYFIELD EDITION | 100% СТАБИЛЬНО
 --]]
 
 -- =============================================
@@ -26,31 +25,41 @@ pcall(function()
 end)
 
 -- =============================================
--- 📦 ЗАГРУЗКА RAYFIELD (СТАБИЛЬНАЯ БИБЛИОТЕКА)
+-- 📦 ЗАГРУЗКА RAYFIELD (РАБОТАЕТ ВСЕГДА)
 -- =============================================
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
-local Window = Rayfield:CreateWindow({
-    Name = "RIVALS INFERNO | aspan666",
-    LoadingTitle = "RIVALS INFERNO",
-    LoadingSubtitle = "by aspan666",
-    ConfigurationSaving = { Enabled = true, FolderName = "RivalsInferno", FileName = "Config" },
-    Discord = { Enabled = false },
-    KeySystem = false,
-    KeySettings = { Title = "RIVALS INFERNO", Subtitle = "Key System", Note = "No key required", FileName = "Key", SaveKey = false, GrabKeyFromSite = false, Key = "" }
-})
+local Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/shlexware/Rayfield/main/source"))()
+wait(0.5)
 
 -- =============================================
 -- ⚙️ ГЛОБАЛЬНЫЕ НАСТРОЙКИ
 -- =============================================
 getgenv().Settings = {
-    Aimbot = false, AimMode = "Silent", Hitbox = "Head", FOV = 120, Smooth = 25,
-    ESP = false, ESPColor = Color3.fromRGB(255, 80, 80), ESPBox = true, ESPName = true, ESPDistance = true, ESPHealth = true,
-    Speed = 16, Jump = 50, Fly = false, FlySpeed = 50, Noclip = false,
-    SkinChanger = false, CurrentSkin = nil,
+    Aimbot = false,
+    AimMode = "Silent",
+    Hitbox = "Head",
+    FOV = 120,
+    Smooth = 25,
+    ESP = false,
+    ESPColor = Color3.fromRGB(255, 80, 80),
+    ESPBox = true,
+    ESPName = true,
+    ESPDistance = true,
+    ESPHealth = true,
+    Speed = 16,
+    Jump = 50,
+    Fly = false,
+    FlySpeed = 50,
+    Noclip = false,
+    SkinChanger = false,
+    CurrentSkin = nil,
 }
+
 getgenv().Skins = {
-    ["❄️ Ice Dragon"] = 16789012345, ["🔥 Phoenix"] = 16789012346, ["👻 Shadow Reaper"] = 16789012347,
-    ["🐯 Golden Tiger"] = 16789012348, ["🤖 Cyberpunk"] = 16789012349,
+    ["❄️ Ice Dragon"] = 16789012345,
+    ["🔥 Phoenix"] = 16789012346,
+    ["👻 Shadow Reaper"] = 16789012347,
+    ["🐯 Golden Tiger"] = 16789012348,
+    ["🤖 Cyberpunk"] = 16789012349,
 }
 
 -- =============================================
@@ -63,7 +72,8 @@ local LP = Players.LocalPlayer
 local Mouse = LP:GetMouse()
 
 -- Silent Aim Hook
-local oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+local oldNamecall
+oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
     local method = getnamecallmethod()
     local args = {...}
     if method == "FireServer" and tostring(self):find("Weapon") and getgenv().Settings.Aimbot and getgenv().Settings.AimMode == "Silent" then
@@ -81,7 +91,7 @@ local oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
             elseif getgenv().Settings.Hitbox == "Torso" then hitPos = (closest.Character:FindFirstChild("UpperTorso") or closest.Character:FindFirstChild("HumanoidRootPart")).Position
             elseif getgenv().Settings.Hitbox == "Legs" then hitPos = (closest.Character:FindFirstChild("LowerTorso") or closest.Character:FindFirstChild("Left Leg")).Position
             else local parts = {"Head", "UpperTorso", "HumanoidRootPart"}; hitPos = closest.Character:FindFirstChild(parts[math.random(1, #parts)]).Position end
-            args[2], args[3] = hitPos, hitPos
+            args[2] = hitPos; args[3] = hitPos
             return oldNamecall(self, unpack(args))
         end
     end
@@ -100,7 +110,7 @@ RunService.RenderStepped:Connect(function()
             end
         end
         if closest then
-            Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(Camera.CFrame.Position, closest.Character.Head.Position), getgenv().Settings.Smooth/100)
+            Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(Camera.CFrame.Position, closest.Character.Head.Position), getgenv().Settings.Smooth / 100)
         end
     end
 end)
@@ -110,68 +120,50 @@ end)
 -- =============================================
 local ESP = {}
 for _, p in pairs(Players:GetPlayers()) do if p ~= LP then
-    ESP[p] = { Box = Drawing.new("Square"), Name = Drawing.new("Text"), Dist = Drawing.new("Text"), Health = Drawing.new("Square"), HealthBg = Drawing.new("Square") }
+    ESP[p] = {Box = Drawing.new("Square"), Name = Drawing.new("Text"), Dist = Drawing.new("Text"), Health = Drawing.new("Square"), HealthBg = Drawing.new("Square")}
     ESP[p].Name.Size, ESP[p].Name.Center, ESP[p].Name.Outline, ESP[p].Name.Font = 16, true, true, 3
     ESP[p].Dist.Size, ESP[p].Dist.Center, ESP[p].Dist.Outline, ESP[p].Dist.Font = 14, true, true, 3
     ESP[p].Box.Thickness, ESP[p].Box.Filled = 1.5, false
-    ESP[p].HealthBg.Filled, ESP[p].Health.Filled = true, true
-    ESP[p].HealthBg.Color = Color3.new(0.2,0.2,0.2)
+    ESP[p].HealthBg.Filled, ESP[p].Health.Filled, ESP[p].HealthBg.Color = true, true, Color3.new(0.2,0.2,0.2)
 end end
+
 Players.PlayerAdded:Connect(function(p) if p ~= LP then
-    ESP[p] = { Box = Drawing.new("Square"), Name = Drawing.new("Text"), Dist = Drawing.new("Text"), Health = Drawing.new("Square"), HealthBg = Drawing.new("Square") }
+    ESP[p] = {Box = Drawing.new("Square"), Name = Drawing.new("Text"), Dist = Drawing.new("Text"), Health = Drawing.new("Square"), HealthBg = Drawing.new("Square")}
     ESP[p].Name.Size, ESP[p].Name.Center, ESP[p].Name.Outline, ESP[p].Name.Font = 16, true, true, 3
     ESP[p].Dist.Size, ESP[p].Dist.Center, ESP[p].Dist.Outline, ESP[p].Dist.Font = 14, true, true, 3
     ESP[p].Box.Thickness, ESP[p].Box.Filled = 1.5, false
-    ESP[p].HealthBg.Filled, ESP[p].Health.Filled = true, true
-    ESP[p].HealthBg.Color = Color3.new(0.2,0.2,0.2)
+    ESP[p].HealthBg.Filled, ESP[p].Health.Filled, ESP[p].HealthBg.Color = true, true, Color3.new(0.2,0.2,0.2)
 end end)
 
 RunService.RenderStepped:Connect(function()
-    if not getgenv().Settings.ESP then
-        for _, e in pairs(ESP) do
-            if e.Box then e.Box.Visible = false end
-            if e.Name then e.Name.Visible = false end
-            if e.Dist then e.Dist.Visible = false end
-            if e.Health then e.Health.Visible = false end
-            if e.HealthBg then e.HealthBg.Visible = false end
-        end
-        return
-    end
+    if not getgenv().Settings.ESP then for _, e in pairs(ESP) do
+        if e.Box then e.Box.Visible = false end if e.Name then e.Name.Visible = false end
+        if e.Dist then e.Dist.Visible = false end if e.Health then e.Health.Visible = false end
+        if e.HealthBg then e.HealthBg.Visible = false end
+    end return end
     for p, e in pairs(ESP) do
         if p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Head") then
-            local rp, rv = Camera:WorldToViewportPoint(p.Character.HumanoidRootPart.Position)
-            local hp, hv = Camera:WorldToViewportPoint(p.Character.Head.Position + Vector3.new(0,0.5,0))
+            local r, rv = Camera:WorldToViewportPoint(p.Character.HumanoidRootPart.Position)
+            local h, hv = Camera:WorldToViewportPoint(p.Character.Head.Position + Vector3.new(0,0.5,0))
             if rv and hv then
-                local height = math.abs((hp.Y - rp.Y) * 1.5)
+                local height = math.abs((h.Y - r.Y) * 1.5)
                 local width = height * 0.6
-                local boxPos = Vector2.new(rp.X - width/2, rp.Y - height/4)
+                local boxPos = Vector2.new(r.X - width/2, r.Y - height/4)
                 if getgenv().Settings.ESPBox then
-                    e.Box.Visible = true
-                    e.Box.Color = getgenv().Settings.ESPColor
-                    e.Box.Position = boxPos
-                    e.Box.Size = Vector2.new(width, height)
+                    e.Box.Visible = true; e.Box.Color = getgenv().Settings.ESPColor; e.Box.Position = boxPos; e.Box.Size = Vector2.new(width, height)
                 else e.Box.Visible = false end
                 if getgenv().Settings.ESPName then
-                    e.Name.Visible = true
-                    e.Name.Position = Vector2.new(rp.X, rp.Y - height/2 - 20)
-                    e.Name.Text = p.Name
-                    e.Name.Color = getgenv().Settings.ESPColor
+                    e.Name.Visible = true; e.Name.Position = Vector2.new(r.X, r.Y - height/2 - 20); e.Name.Text = p.Name; e.Name.Color = getgenv().Settings.ESPColor
                 else e.Name.Visible = false end
                 if getgenv().Settings.ESPDistance then
-                    e.Dist.Visible = true
-                    e.Dist.Position = Vector2.new(rp.X, rp.Y - height/2 - 5)
+                    e.Dist.Visible = true; e.Dist.Position = Vector2.new(r.X, r.Y - height/2 - 5)
                     e.Dist.Text = math.floor((LP.Character.HumanoidRootPart.Position - p.Character.HumanoidRootPart.Position).Magnitude) .. "m"
-                    e.Dist.Color = Color3.new(1,1,1)
                 else e.Dist.Visible = false end
                 if getgenv().Settings.ESPHealth then
-                    local hpct = p.Character.Humanoid.Health / p.Character.Humanoid.MaxHealth
-                    e.HealthBg.Visible = true
-                    e.HealthBg.Position = Vector2.new(boxPos.X - 6, boxPos.Y)
-                    e.HealthBg.Size = Vector2.new(3, height)
-                    e.Health.Visible = true
-                    e.Health.Position = Vector2.new(boxPos.X - 6, boxPos.Y + (height * (1 - hpct)))
-                    e.Health.Size = Vector2.new(3, height * hpct)
-                    e.Health.Color = Color3.fromRGB(255 - (255 * hpct), 255 * hpct, 0)
+                    local hp = p.Character.Humanoid.Health / p.Character.Humanoid.MaxHealth
+                    e.HealthBg.Visible = true; e.HealthBg.Position = Vector2.new(boxPos.X - 6, boxPos.Y); e.HealthBg.Size = Vector2.new(3, height)
+                    e.Health.Visible = true; e.Health.Position = Vector2.new(boxPos.X - 6, boxPos.Y + (height * (1 - hp)))
+                    e.Health.Size = Vector2.new(3, height * hp); e.Health.Color = Color3.fromRGB(255 - (255 * hp), 255 * hp, 0)
                 else e.HealthBg.Visible = false; e.Health.Visible = false end
             else
                 e.Box.Visible = false; e.Name.Visible = false; e.Dist.Visible = false; e.Health.Visible = false; e.HealthBg.Visible = false
@@ -186,14 +178,9 @@ end)
 local flyConnection
 local function toggleFly(state)
     if flyConnection then flyConnection:Disconnect() end
-    if not state then
-        if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.PlatformStand = false end
-        return
-    end
-    local c = LP.Character
-    if not c then return end
-    local h = c:FindFirstChild("Humanoid")
-    local r = c:FindFirstChild("HumanoidRootPart")
+    if not state then if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.PlatformStand = false end return end
+    local c = LP.Character; if not c then return end
+    local h = c:FindFirstChild("Humanoid"); local r = c:FindFirstChild("HumanoidRootPart")
     if not h or not r then return end
     h.PlatformStand = true
     flyConnection = RunService.RenderStepped:Connect(function()
@@ -205,11 +192,12 @@ end
 
 RunService.Stepped:Connect(function()
     if getgenv().Settings.Noclip and LP.Character then
-        for _, part in pairs(LP.Character:GetDescendants()) do
-            if part:IsA("BasePart") then part.CanCollide = false end
-        end
+        for _, part in pairs(LP.Character:GetDescendants()) do if part:IsA("BasePart") then part.CanCollide = false end end
     end
 end)
+
+LP.CharacterAdded:Connect(function(c) wait(0.5) local h = c:WaitForChild("Humanoid") h.WalkSpeed, h.JumpPower = getgenv().Settings.Speed, getgenv().Settings.Jump end)
+if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.WalkSpeed, LP.Character.Humanoid.JumpPower = getgenv().Settings.Speed, getgenv().Settings.Jump end
 
 -- =============================================
 -- 🎨 SKIN CHANGER
@@ -229,58 +217,63 @@ local oldSkinHook = hookmetamethod(game, "__namecall", function(self, ...)
 end)
 
 -- =============================================
--- 🖥️ RAYFIELD UI ВКЛАДКИ
+-- 🖥️ RAYFIELD UI
 -- =============================================
-local AimbotTab = Window:CreateTab("🎯 Aimbot", 4483362458)
-local ESPTab = Window:CreateTab("👁️ ESP", 4483362458)
-local MoveTab = Window:CreateTab("🚀 Movement", 4483362458)
-local SkinTab = Window:CreateTab("🎨 Skins", 4483362458)
+local Window = Rayfield:CreateWindow({
+    Name = "RIVALS INFERNO | aspan666",
+    LoadingTitle = "RIVALS INFERNO",
+    LoadingSubtitle = "made by aspan666",
+    ConfigurationSaving = { Enabled = true, FolderName = "RivalsInferno", FileName = "Config" },
+    Discord = { Enabled = false },
+    KeySystem = false,
+})
 
--- Aimbot
-local AimbotSection = AimbotTab:CreateSection("Основные настройки")
-AimbotTab:CreateToggle({ Name = "Aimbot", CurrentValue = getgenv().Settings.Aimbot, Flag = "aimbot", Callback = function(v) getgenv().Settings.Aimbot = v end })
-AimbotTab:CreateDropdown({ Name = "Режим", Options = {"Silent", "Visible"}, CurrentOption = getgenv().Settings.AimMode, Flag = "aimmode", Callback = function(v) getgenv().Settings.AimMode = v end })
-AimbotTab:CreateDropdown({ Name = "Хитбокс", Options = {"Head", "Torso", "Legs", "Random"}, CurrentOption = getgenv().Settings.Hitbox, Flag = "hitbox", Callback = function(v) getgenv().Settings.Hitbox = v end })
-AimbotTab:CreateSlider({ Name = "FOV", Range = {30,360}, Increment = 5, Suffix = "px", CurrentValue = getgenv().Settings.FOV, Flag = "fov", Callback = function(v) getgenv().Settings.FOV = v end })
-AimbotTab:CreateSlider({ Name = "Smooth", Range = {1,100}, Increment = 5, Suffix = "%", CurrentValue = getgenv().Settings.Smooth, Flag = "smooth", Callback = function(v) getgenv().Settings.Smooth = v end })
+-- Вкладка Aimbot
+local AimTab = Window:CreateTab("🎯 Aimbot", "rbxassetid://13951167659")
+local AimSec = AimTab:CreateSection("Основные настройки")
+AimTab:CreateToggle({ Name = "Aimbot", CurrentValue = false, Callback = function(v) getgenv().Settings.Aimbot = v end })
+AimTab:CreateDropdown({ Name = "Режим", Options = {"Silent", "Visible"}, CurrentOption = "Silent", Callback = function(v) getgenv().Settings.AimMode = v end })
+AimTab:CreateDropdown({ Name = "Хитбокс", Options = {"Head", "Torso", "Legs", "Random"}, CurrentOption = "Head", Callback = function(v) getgenv().Settings.Hitbox = v end })
+AimTab:CreateSlider({ Name = "FOV", Range = {30, 360}, Increment = 5, CurrentValue = 120, Callback = function(v) getgenv().Settings.FOV = v end })
+AimTab:CreateSlider({ Name = "Smooth", Range = {1, 100}, Increment = 5, CurrentValue = 25, Callback = function(v) getgenv().Settings.Smooth = v end })
 
--- ESP
-local ESPSection = ESPTab:CreateSection("ESP Настройки")
-ESPTab:CreateToggle({ Name = "ESP", CurrentValue = getgenv().Settings.ESP, Flag = "esp", Callback = function(v) getgenv().Settings.ESP = v end })
-ESPTab:CreateToggle({ Name = "Box", CurrentValue = getgenv().Settings.ESPBox, Flag = "esp_box", Callback = function(v) getgenv().Settings.ESPBox = v end })
-ESPTab:CreateToggle({ Name = "Name", CurrentValue = getgenv().Settings.ESPName, Flag = "esp_name", Callback = function(v) getgenv().Settings.ESPName = v end })
-ESPTab:CreateToggle({ Name = "Distance", CurrentValue = getgenv().Settings.ESPDistance, Flag = "esp_dist", Callback = function(v) getgenv().Settings.ESPDistance = v end })
-ESPTab:CreateToggle({ Name = "Health", CurrentValue = getgenv().Settings.ESPHealth, Flag = "esp_health", Callback = function(v) getgenv().Settings.ESPHealth = v end })
-ESPTab:CreateColorPicker({ Name = "ESP Color", CurrentValue = getgenv().Settings.ESPColor, Flag = "esp_color", Callback = function(v) getgenv().Settings.ESPColor = v end })
+-- Вкладка ESP
+local ESPTab = Window:CreateTab("👁️ ESP", "rbxassetid://13951169214")
+ESPTab:CreateSection("Визуал")
+ESPTab:CreateToggle({ Name = "ESP", CurrentValue = false, Callback = function(v) getgenv().Settings.ESP = v end })
+ESPTab:CreateToggle({ Name = "Box", CurrentValue = true, Callback = function(v) getgenv().Settings.ESPBox = v end })
+ESPTab:CreateToggle({ Name = "Name", CurrentValue = true, Callback = function(v) getgenv().Settings.ESPName = v end })
+ESPTab:CreateToggle({ Name = "Distance", CurrentValue = true, Callback = function(v) getgenv().Settings.ESPDistance = v end })
+ESPTab:CreateToggle({ Name = "Health", CurrentValue = true, Callback = function(v) getgenv().Settings.ESPHealth = v end })
+ESPTab:CreateColorPicker({ Name = "Color", CurrentValue = Color3.fromRGB(255,80,80), Callback = function(v) getgenv().Settings.ESPColor = v end })
 
--- Movement
-local MoveSection = MoveTab:CreateSection("Передвижение")
-MoveTab:CreateSlider({ Name = "WalkSpeed", Range = {16,350}, Increment = 5, Suffix = "WS", CurrentValue = getgenv().Settings.Speed, Flag = "speed", Callback = function(v)
-    getgenv().Settings.Speed = v
-    if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.WalkSpeed = v end
-end})
-MoveTab:CreateSlider({ Name = "JumpPower", Range = {50,200}, Increment = 5, Suffix = "JP", CurrentValue = getgenv().Settings.Jump, Flag = "jump", Callback = function(v)
-    getgenv().Settings.Jump = v
-    if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.JumpPower = v end
-end})
-MoveTab:CreateToggle({ Name = "Fly", CurrentValue = getgenv().Settings.Fly, Flag = "fly", Callback = function(v)
-    getgenv().Settings.Fly = v
-    toggleFly(v)
-end})
-MoveTab:CreateSlider({ Name = "Fly Speed", Range = {10,200}, Increment = 5, Suffix = "spd", CurrentValue = getgenv().Settings.FlySpeed, Flag = "fly_speed", Callback = function(v) getgenv().Settings.FlySpeed = v end })
-MoveTab:CreateToggle({ Name = "Noclip", CurrentValue = getgenv().Settings.Noclip, Flag = "noclip", Callback = function(v) getgenv().Settings.Noclip = v end })
+-- Вкладка Movement
+local MoveTab = Window:CreateTab("🚀 Movement", "rbxassetid://13951164120")
+MoveTab:CreateSection("Передвижение")
+MoveTab:CreateSlider({ Name = "WalkSpeed", Range = {16, 350}, Increment = 5, CurrentValue = 16, Callback = function(v)
+    getgenv().Settings.Speed = v; if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.WalkSpeed = v end end })
+MoveTab:CreateSlider({ Name = "JumpPower", Range = {50, 200}, Increment = 5, CurrentValue = 50, Callback = function(v)
+    getgenv().Settings.Jump = v; if LP.Character and LP.Character:FindFirstChild("Humanoid") then LP.Character.Humanoid.JumpPower = v end end })
+MoveTab:CreateToggle({ Name = "Fly", CurrentValue = false, Callback = function(v) getgenv().Settings.Fly = v; toggleFly(v) end })
+MoveTab:CreateSlider({ Name = "Fly Speed", Range = {10, 200}, Increment = 5, CurrentValue = 50, Callback = function(v) getgenv().Settings.FlySpeed = v end })
+MoveTab:CreateToggle({ Name = "Noclip", CurrentValue = false, Callback = function(v) getgenv().Settings.Noclip = v end })
 
--- Skin Changer
-local SkinSection = SkinTab:CreateSection("Skin Changer")
-SkinTab:CreateToggle({ Name = "Skin Changer", CurrentValue = getgenv().Settings.SkinChanger, Flag = "skin_toggle", Callback = function(v) getgenv().Settings.SkinChanger = v end })
+-- Вкладка Skin Changer
+local SkinTab = Window:CreateTab("🎨 Skin", "rbxassetid://13951167951")
+SkinTab:CreateSection("Скин-ченджер")
+SkinTab:CreateToggle({ Name = "Skin Changer", CurrentValue = false, Callback = function(v) getgenv().Settings.SkinChanger = v end })
+SkinTab:CreateLabel("Доступные скины")
 for name, id in pairs(getgenv().Skins) do
     SkinTab:CreateButton({ Name = name, Callback = function()
         getgenv().Settings.CurrentSkin = id
         Rayfield:Notify({ Title = "Skin Changer", Content = "Выбран: " .. name, Duration = 3 })
-    end})
+    end })
 end
 
--- Приветствие
-Rayfield:Notify({ Title = "RIVALS INFERNO", Content = "✅ Made by aspan666 | Загружено", Duration = 5 })
-print("🔥 RIVALS INFERNO | aspan666 | ГОТОВО")
-print("📌 Открыть меню: RightShift")
+-- Финал
+Rayfield:Notify({ Title = "RIVALS INFERNO", Content = "✅ Made by aspan666 | Rayfield Edition", Duration = 5 })
+print("========================================")
+print("🔥 RIVALS INFERNO | aspan666")
+print("✅ RAYFIELD EDITION | ГОТОВО")
+print("📌 Нажми RightShift или иконку для меню")
+print("========================================")
